@@ -7,22 +7,28 @@ public class TreeNode {
     private String name;
     private List<TreeNode> children;
     private String path;
-    public TreeNode(String name) {
+    private Boolean isFile;
+
+    public TreeNode(String name, String path, Boolean isFile) {
         this.name = name;
         this.children = new ArrayList<>();
+        this.path = path;
+        this.isFile = isFile;
     }
+
     public String getName() {
         return name;
     }
+
     public List<TreeNode> getChildren() {
         return children;
     }
+
     public String getPath() {
         return path;
     }
-
-    public void setPath(String path) {
-        this.path = path;
+    public Boolean isFile() {
+        return isFile;
     }
     public void addChild(TreeNode child) {
         children.add(child);

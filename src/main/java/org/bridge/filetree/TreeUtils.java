@@ -1,8 +1,9 @@
 package org.bridge.filetree;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class TreePrinter {
+public class TreeUtils {
 
     public static void printFileTree(TreeNode node, String indent) {
         System.out.println(indent + node.getName());
@@ -30,6 +31,21 @@ public class TreePrinter {
                 printFileTree(node1, "");
                 System.out.println("****************************************************");
             }
+        }
+    }
+
+    public static List<String> getFilePathList(TreeNode node) {
+        List<String> pathList = new ArrayList<>();
+        getFilePathHelper(node,pathList);
+        return pathList;
+    }
+    private static void getFilePathHelper(TreeNode node,List<String> pathList){
+        for (TreeNode child : node.getChildren()) {
+            if (child.isFile()) {// if child is a file, stop recursing and add to list
+                pathList.add(child.getPath());
+                continue;
+            }
+            getFilePathHelper(child,pathList);
         }
     }
 

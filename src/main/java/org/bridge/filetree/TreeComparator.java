@@ -7,11 +7,10 @@ import java.util.List;
 public class TreeComparator {
     public static DeltaCommons compareTrees(TreeNode tree1, TreeNode tree2) {
         List<TreeDifference> differences = new ArrayList<>();
-        TreeNode intersectionTree = new TreeNode("intersection");
+        TreeNode intersectionTree = new TreeNode("/dummy", "", false);
         compareNodes(tree1, tree2, differences, intersectionTree);
-        return new DeltaCommons(differences,intersectionTree);
+        return new DeltaCommons(differences, intersectionTree);
     }
-
 
     private static void compareNodes(TreeNode node1, TreeNode node2, List<TreeDifference> differences, TreeNode intersectionTree) {
         if (node1 == null && node2 == null) {
@@ -24,12 +23,17 @@ public class TreeComparator {
         for (TreeNode childA : node1.getChildren()) {
             boolean foundMatch = false;
             for (TreeNode childB : node2.getChildren()) {
-                if (childA.getName().equals(childB.getName())) {
+                if (childA.getName().equals(childB.getName()) &&
+                        (childA.isFile() == childB.isFile()) // one is a file and the other is a directory
+                ) {
                     foundMatch = true;
-                    TreeNode commonNode = new TreeNode(childA.getName());
-                    intersectionTree.addChild(commonNode);
-                    if ((!childA.getChildren().isEmpty()) && (!childB.getChildren().isEmpty())) { // both are same directory
+                    if ((!childA.isFile()) && (!childB.isFile())) { // both are same directories
+                        TreeNode commonNode = new TreeNode(childA.getName(), childA.getPath(), false);
+                        intersectionTree.addChild(commonNode);
                         compareNodes(childA, childB, differences, commonNode);
+                    } else { // both are files
+                        TreeNode commonNode = new TreeNode(childA.getName(), childA.getPath(), true);
+                        intersectionTree.addChild(commonNode);
                     }
                     break;
                 }
@@ -41,7 +45,7 @@ public class TreeComparator {
         for (TreeNode childB : node2.getChildren()) {
             boolean foundMatch = false;
             for (TreeNode childA : node1.getChildren()) {
-                if (childA.getName().equals(childB.getName())) {
+                if (childA.getName().equals(childB.getName()) && (childA.isFile() == childB.isFile())) {
                     foundMatch = true;
                     break;
                 }

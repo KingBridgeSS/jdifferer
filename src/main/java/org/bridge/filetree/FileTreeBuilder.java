@@ -1,7 +1,7 @@
 package org.bridge.filetree;
 
 import java.io.File;
-import java.util.List;
+import java.util.Arrays;
 
 
 public class FileTreeBuilder {
@@ -16,8 +16,8 @@ public class FileTreeBuilder {
     }
 
     private static TreeNode buildFileTreeHelper(File directory, String path) {
-        TreeNode node = new TreeNode(directory.getName());
-        node.setPath(path + "/" + directory.getName());
+        String appendPath = path + "/" + directory.getName();
+        TreeNode node = new TreeNode(directory.getName(), appendPath, false);
 
         File[] files = directory.listFiles();
         if (files != null) {
@@ -28,7 +28,7 @@ public class FileTreeBuilder {
                         node.addChild(childNode);
                     }
                 } else {
-                    node.addChild(new TreeNode(file.getName()));
+                    node.addChild(new TreeNode(file.getName(), appendPath + "/" + file.getName(), true));
                 }
             }
         }
@@ -42,7 +42,11 @@ public class FileTreeBuilder {
         TreeNode t1 = buildFileTree(A);
         TreeNode t2 = buildFileTree(B);
         DeltaCommons dc = TreeComparator.compareTrees(t1, t2);
-        TreePrinter.printDifference(dc.getDifferences());
-        TreePrinter.printFileTree(dc.getIntersectionTree(), "");
+//        TreeUtils.printDifference(dc.getDifferences());
+//        TreeUtils.printFileTree(dc.getIntersectionTree(), "");
+        System.out.println(Arrays.toString(TreeUtils.getFilePathList(t1).toArray()));
+        System.out.println(Arrays.toString(TreeUtils.getFilePathList(t2).toArray()));
+        System.out.println(Arrays.toString(TreeUtils.getFilePathList(dc.getIntersectionTree()).toArray()));
+
     }
 }

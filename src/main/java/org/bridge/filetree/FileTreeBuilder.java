@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 
 
-
 public class FileTreeBuilder {
 
     public static TreeNode buildFileTree(String directoryPath) {
@@ -37,25 +36,13 @@ public class FileTreeBuilder {
         return node;
     }
 
-    public static void printFileTree(TreeNode node, String indent) {
-        System.out.println(indent + node.getName());
-        List<TreeNode> children = node.getChildren();
-        for (int i = 0; i < children.size(); i++) {
-            TreeNode child = children.get(i);
-            if (i == children.size() - 1) {
-                printFileTree(child, indent + "   ");
-            } else {
-                printFileTree(child, indent + "│  ");
-            }
-        }
-    }
-
     public static void main(String[] args) {
         String A = "G:\\workspace\\dev\\jdifferer\\A";
-        String B="G:\\workspace\\dev\\jdifferer\\B";
+        String B = "G:\\workspace\\dev\\jdifferer\\B";
         TreeNode t1 = buildFileTree(A);
-        TreeNode t2=buildFileTree(B);
-        List<TreeDifference> diffList=TreeComparator.compareTrees(t1,t2);
-        TreeComparator.printDifference(diffList);
+        TreeNode t2 = buildFileTree(B);
+        DeltaCommons dc = TreeComparator.compareTrees(t1, t2);
+        TreePrinter.printDifference(dc.getDifferences());
+        TreePrinter.printFileTree(dc.getIntersectionTree(), "");
     }
 }

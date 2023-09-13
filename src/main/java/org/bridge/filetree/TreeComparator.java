@@ -5,29 +5,15 @@ import java.util.List;
 
 
 public class TreeComparator {
-    public static List<TreeDifference> compareTrees(TreeNode tree1, TreeNode tree2) {
+    public static DeltaCommons compareTrees(TreeNode tree1, TreeNode tree2) {
         List<TreeDifference> differences = new ArrayList<>();
-        compareNodes(tree1, tree2, differences);
-        return differences;
+        TreeNode intersectionTree = new TreeNode("intersection");
+        compareNodes(tree1, tree2, differences, intersectionTree);
+        return new DeltaCommons(differences,intersectionTree);
     }
 
-    public static void printDifference(List<TreeDifference> differences) {
-        for (TreeDifference diff : differences) {
-            TreeNode node1 = diff.getNode1();
-            TreeNode node2 = diff.getNode2();
-            if (node1 == null) {
-                System.out.println("++++++++++");
-                FileTreeBuilder.printFileTree(node2, "");
-                System.out.println("****************************************************");
-            } else {
-                System.out.println("----------");
-                FileTreeBuilder.printFileTree(node1, "");
-                System.out.println("****************************************************");
-            }
-        }
-    }
 
-    private static void compareNodes(TreeNode node1, TreeNode node2, List<TreeDifference> differences) {
+    private static void compareNodes(TreeNode node1, TreeNode node2, List<TreeDifference> differences, TreeNode intersectionTree) {
         if (node1 == null && node2 == null) {
             return;
         }
@@ -40,8 +26,10 @@ public class TreeComparator {
             for (TreeNode childB : node2.getChildren()) {
                 if (childA.getName().equals(childB.getName())) {
                     foundMatch = true;
+                    TreeNode commonNode = new TreeNode(childA.getName());
+                    intersectionTree.addChild(commonNode);
                     if ((!childA.getChildren().isEmpty()) && (!childB.getChildren().isEmpty())) { // both are same directory
-                        compareNodes(childA, childB, differences);
+                        compareNodes(childA, childB, differences, commonNode);
                     }
                     break;
                 }

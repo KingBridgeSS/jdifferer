@@ -34,19 +34,35 @@ public class TreeUtils {
         }
     }
 
-    public static List<String> getFilePathList(TreeNode node) {
+    public static List<String> getFilePathList(TreeNode root) {
         List<String> pathList = new ArrayList<>();
-        getFilePathHelper(node,pathList);
+        getFilePathHelper(root, pathList);
         return pathList;
     }
-    private static void getFilePathHelper(TreeNode node,List<String> pathList){
+
+    private static void getFilePathHelper(TreeNode node, List<String> pathList) {
         for (TreeNode child : node.getChildren()) {
             if (child.isFile()) {// if child is a file, stop recursing and add to list
                 pathList.add(child.getPath());
                 continue;
             }
-            getFilePathHelper(child,pathList);
+            getFilePathHelper(child, pathList);
         }
     }
 
+    public static List<TreeNode> getFileNodeList(TreeNode root) {
+        List<TreeNode> nodeList = new ArrayList<>();
+        getFileNodeListHelper(root, nodeList);
+        return nodeList;
+    }
+
+    private static void getFileNodeListHelper(TreeNode node, List<TreeNode> nodeList) {
+        for (TreeNode child : node.getChildren()) {
+            if (child.isFile()) {
+                nodeList.add(child);
+                continue;
+            }
+            getFileNodeListHelper(child, nodeList);
+        }
+    }
 }

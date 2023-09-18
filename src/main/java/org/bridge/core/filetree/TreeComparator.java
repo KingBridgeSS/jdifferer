@@ -7,7 +7,7 @@ import java.util.List;
 public class TreeComparator {
     public static DeltaCommons compareTrees(TreeNode tree1, TreeNode tree2) {
         List<TreeDifference> differences = new ArrayList<>();
-        TreeNode intersectionTree = new TreeNode("/dummy", "", false);
+        TreeNode intersectionTree = new TreeNode("/dummy", "", null, false);
         compareNodes(tree1, tree2, differences, intersectionTree);
         return new DeltaCommons(differences, intersectionTree);
     }
@@ -28,11 +28,11 @@ public class TreeComparator {
                 ) {
                     foundMatch = true;
                     if ((!childA.isFile()) && (!childB.isFile())) { // both are same directories
-                        TreeNode commonNode = new TreeNode(childA.getName(), childA.getPath(), false);
+                        TreeNode commonNode = new TreeNode(childA.getName(), childA.getPath(), childA.getFilePath(), false);
                         intersectionTree.addChild(commonNode);
                         compareNodes(childA, childB, differences, commonNode);
                     } else { // both are files
-                        TreeNode commonNode = new TreeNode(childA.getName(), childA.getPath(), true);
+                        TreeNode commonNode = new TreeNode(childA.getName(), childA.getPath(), childA.getFilePath(), true);
                         intersectionTree.addChild(commonNode);
                     }
                     break;

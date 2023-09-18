@@ -11,6 +11,10 @@ import java.nio.file.Paths;
 
 public class JDCoreDecompiler implements Decompiler {
     @Override
+    public String decompile(byte[] classBytes) throws Exception {
+        return null;
+    }
+    @Override
     public String decompile(String fileName) throws Exception {
         FileNameLoader loader = new FileNameLoader();
         DefaultPrinter printer = new DefaultPrinter();
@@ -18,12 +22,6 @@ public class JDCoreDecompiler implements Decompiler {
         decompiler.decompile(loader, printer, fileName);
         return printer.toString();
     }
-
-    @Override
-    public String decompile(byte[] classBytes) throws Exception {
-        return null;
-    }
-
     private class FileNameLoader implements Loader {
         @Override
         public byte[] load(String fileName) throws LoaderException {
@@ -43,7 +41,7 @@ public class JDCoreDecompiler implements Decompiler {
     }
 
     private class DefaultPrinter implements Printer {
-        protected static final String TAB = "  ";
+        protected static final String TAB = "   ";
         protected static final String NEWLINE = "\n";
 
         protected int indentationCount = 0;
@@ -126,4 +124,3 @@ public class JDCoreDecompiler implements Decompiler {
         }
     }
 }
-

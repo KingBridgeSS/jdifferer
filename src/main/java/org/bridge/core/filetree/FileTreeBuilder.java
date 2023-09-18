@@ -17,7 +17,7 @@ public class FileTreeBuilder {
 
     private static TreeNode buildFileTreeHelper(File directory, String path) {
         String appendPath = path + "/" + directory.getName();
-        TreeNode node = new TreeNode(directory.getName(), appendPath, false);
+        TreeNode node = new TreeNode(directory.getName(), appendPath, directory.getPath(),false);
 
         File[] files = directory.listFiles();
         if (files != null) {
@@ -28,7 +28,7 @@ public class FileTreeBuilder {
                         node.addChild(childNode);
                     }
                 } else {
-                    node.addChild(new TreeNode(file.getName(), appendPath + "/" + file.getName(), true));
+                    node.addChild(new TreeNode(file.getName(), appendPath + "/" + file.getName(),file.getPath(), true));
                 }
             }
         }

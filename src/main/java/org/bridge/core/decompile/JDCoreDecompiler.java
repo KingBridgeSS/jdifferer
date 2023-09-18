@@ -19,6 +19,11 @@ public class JDCoreDecompiler implements Decompiler {
         return printer.toString();
     }
 
+    @Override
+    public String decompile(byte[] classBytes) throws Exception {
+        return null;
+    }
+
     private class FileNameLoader implements Loader {
         @Override
         public byte[] load(String fileName) throws LoaderException {

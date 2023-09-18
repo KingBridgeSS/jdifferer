@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class JDCoreDecompiler implements decompiler {
+public class JDCoreDecompiler implements Decompiler {
     @Override
     public String decompile(String fileName) throws Exception {
         FileNameLoader loader = new FileNameLoader();

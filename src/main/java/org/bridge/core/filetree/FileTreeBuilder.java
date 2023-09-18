@@ -1,4 +1,4 @@
-package org.bridge.filetree;
+package org.bridge.core.filetree;
 
 import java.io.File;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package org.bridge.filetree;
+package org.bridge.core.filetree;
 
 public class TreeDifference {
 

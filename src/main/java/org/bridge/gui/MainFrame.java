@@ -1,14 +1,16 @@
 package org.bridge.gui;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import org.bridge.core.filetree.TreeNode;
 import org.bridge.core.services.MakeDiffFileTree;
 import org.bridge.core.services.TextSetter;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -17,8 +19,8 @@ public class MainFrame {
     private JTree fileTree;
     private JPanel mainPanel;
     private JScrollPane fileTreeScroll;
-    private JTextPane codeTextPane1;
-    private JTextPane codeTextPane2;
+    private RSyntaxTextArea textArea1;
+    private RSyntaxTextArea textArea2;
     private JScrollPane codeScroll1;
     private JScrollPane codeScroll2;
     private JSplitPane codeSplitPane;
@@ -41,8 +43,23 @@ public class MainFrame {
     }
 
     private void loadOtherGUI() {
+        insertTextArea();
         loadMenuBar();
         createFileTree();
+    }
+
+    private void insertTextArea() {
+        textArea1 = new RSyntaxTextArea();
+        textArea2 = new RSyntaxTextArea();
+
+        textArea1.setEditable(false);
+        textArea1.setHighlightCurrentLine(false);
+        textArea2.setEditable(false);
+        textArea2.setHighlightCurrentLine(false);
+        textArea1.setBackground(new Color(245, 245, 245));
+        textArea2.setBackground(new Color(245, 245, 245));
+        codeScroll1.setViewportView(textArea1);
+        codeScroll2.setViewportView(textArea2);
     }
 
     private void loadMenuBar() {
@@ -61,33 +78,32 @@ public class MainFrame {
     }
 
     private void createFileTree() {
-        MakeDiffFileTree.setDiffTree(fileTree, "G:\\workspace\\dev\\jdifferer\\A", "G:\\workspace\\dev\\jdifferer\\B");
+        String dirA = "G:\\workspace\\dev\\jdifferer\\temp";
+        String dirB = "G:\\workspace\\dev\\jdifferer\\temp\\temp2";
+        MakeDiffFileTree.setDiffTree(fileTree, dirA, dirB);
         fileTree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
             public void valueChanged(TreeSelectionEvent e) {
                 DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) fileTree.getLastSelectedPathComponent();
-                if (selectedNode != null) {
+                if (selectedNode != null && selectedNode.getUserObject() instanceof TreeNode) {
                     DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) selectedNode.getParent();
                     TreeNode treeNode = (TreeNode) selectedNode.getUserObject();
-                    try {
                         if (parentNode.getUserObject().equals("ADD")) {
-                            TextSetter.readFileToPane(codeTextPane2, Paths.get(treeNode.getFilePath()));
-                            codeTextPane1.setText(null);
+                            TextSetter.readFileToTextArea(textArea2, Paths.get(treeNode.getFilePath()));
+                            textArea1.setText(null);
+                        } else if (parentNode.getUserObject().equals("DELETE")) {
+                            TextSetter.readFileToTextArea(textArea1, Paths.get(treeNode.getFilePath()));
+                            textArea2.setText(null);
                         } else {
-                            TextSetter.readFileToPane(codeTextPane1, Paths.get(treeNode.getFilePath()));
-                            codeTextPane2.setText(null);
+                            TextSetter.setDiffTextArea(textArea1, textArea2, treeNode.getPath(), dirA, dirB);
                         }
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
                 }
             }
         });
     }
 
     public static void main(String[] args) {
-        FlatDarculaLaf.setup();
+//        FlatLightLaf.setup();
         new MainFrame().showGUI();
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public class TreeComparator {
     public static DeltaCommons compareTrees(TreeNode tree1, TreeNode tree2) {
         List<TreeDifference> differences = new ArrayList<>();
-        TreeNode intersectionTree = new TreeNode("/dummy", "", null, false);
+        TreeNode intersectionTree = new TreeNode("", "", null, false);
         compareNodes(tree1, tree2, differences, intersectionTree);
         return new DeltaCommons(differences, intersectionTree);
     }

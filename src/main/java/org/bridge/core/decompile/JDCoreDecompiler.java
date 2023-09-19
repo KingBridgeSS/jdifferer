@@ -36,7 +36,7 @@ public class JDCoreDecompiler implements Decompiler {
 
         @Override
         public boolean canLoad(String internalName) {
-            return this.getClass().getResource("/" + internalName + ".class") != null;
+            return Files.isRegularFile(Paths.get(internalName));
         }
     }
 

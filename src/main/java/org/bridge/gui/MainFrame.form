@@ -55,14 +55,7 @@
                     </constraints>
                     <properties/>
                     <border type="none"/>
-                    <children>
-                      <component id="b5308" class="javax.swing.JTextPane" binding="codeTextPane1">
-                        <constraints/>
-                        <properties>
-                          <editable value="false"/>
-                        </properties>
-                      </component>
-                    </children>
+                    <children/>
                   </scrollpane>
                   <scrollpane id="44c67" binding="codeScroll2">
                     <constraints>
@@ -70,14 +63,7 @@
                     </constraints>
                     <properties/>
                     <border type="none"/>
-                    <children>
-                      <component id="30420" class="javax.swing.JTextPane" binding="codeTextPane2">
-                        <constraints/>
-                        <properties>
-                          <editable value="false"/>
-                        </properties>
-                      </component>
-                    </children>
+                    <children/>
                   </scrollpane>
                 </children>
               </splitpane>

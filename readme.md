@@ -15,6 +15,8 @@ diff jar
 - [ ] diff
 - [ ] line wrap
 - [ ] auto expand
+- [ ] error dialog
+- [ ] ctrl f
 ## diff
 ## diff file tree:
 

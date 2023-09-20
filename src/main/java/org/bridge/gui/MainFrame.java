@@ -1,7 +1,7 @@
 package org.bridge.gui;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import org.bridge.core.filetree.TreeNode;
+import org.bridge.core.services.JarProcessor;
 import org.bridge.core.services.MakeDiffFileTree;
 import org.bridge.core.services.TextSetter;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -11,8 +11,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
-import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.File;
 
 public class MainFrame {
     private JPanel rootPanel;
@@ -26,6 +25,8 @@ public class MainFrame {
     private JSplitPane codeSplitPane;
     private JSplitPane mainSplitPane;
     private JFrame frame;
+    private String dirA;
+    private String dirB;
 
     public void showGUI() {
         frame = new JFrame("Jdifferer");
@@ -37,6 +38,13 @@ public class MainFrame {
         frame.setVisible(true);
     }
 
+    void loadJars(File origin, File revised) {
+        String[] dirInfo = JarProcessor.process(origin.getAbsolutePath(), revised.getAbsolutePath());
+        dirA = dirInfo[0];
+        dirB = dirInfo[1];
+        createFileTree();
+    }
+
     private void setDividerLocation() {
         mainSplitPane.setResizeWeight(0.15);
         codeSplitPane.setResizeWeight(0.5);
@@ -45,7 +53,6 @@ public class MainFrame {
     private void loadOtherGUI() {
         insertTextArea();
         loadMenuBar();
-        createFileTree();
     }
 
     private void insertTextArea() {
@@ -68,6 +75,10 @@ public class MainFrame {
         // Project
         JMenu projectMenu = new JMenu("Project");
         JMenuItem openItem = new JMenuItem("open");
+        openItem.addActionListener(e -> {
+            JDialog dialog = new JarsChoosingDialog(frame, this);
+            dialog.setVisible(true);
+        });
         JMenuItem exitItem = new JMenuItem("exit");
         projectMenu.add(openItem);
         projectMenu.add(exitItem);
@@ -78,8 +89,6 @@ public class MainFrame {
     }
 
     private void createFileTree() {
-        String dirA = "G:\\workspace\\dev\\jdifferer\\temp";
-        String dirB = "G:\\workspace\\dev\\jdifferer\\temp\\temp2";
         MakeDiffFileTree.setDiffTree(fileTree, dirA, dirB);
         fileTree.addTreeSelectionListener(new TreeSelectionListener() {
             @Override
@@ -107,7 +116,6 @@ public class MainFrame {
     }
 
     public static void main(String[] args) {
-//        FlatLightLaf.setup();
         new MainFrame().showGUI();
     }
 }

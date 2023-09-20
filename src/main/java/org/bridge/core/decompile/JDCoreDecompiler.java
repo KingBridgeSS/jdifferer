@@ -14,14 +14,20 @@ public class JDCoreDecompiler implements Decompiler {
     public String decompile(byte[] classBytes) throws Exception {
         return null;
     }
+
     @Override
-    public String decompile(String fileName) throws Exception {
+    public String decompile(String fileName) {
         FileNameLoader loader = new FileNameLoader();
         DefaultPrinter printer = new DefaultPrinter();
         ClassFileToJavaSourceDecompiler decompiler = new ClassFileToJavaSourceDecompiler();
-        decompiler.decompile(loader, printer, fileName);
+        try {
+            decompiler.decompile(loader, printer, fileName);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         return printer.toString();
     }
+
     private class FileNameLoader implements Loader {
         @Override
         public byte[] load(String fileName) throws LoaderException {

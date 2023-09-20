@@ -43,6 +43,9 @@ public class TextSetter {
             Path path2 = Paths.get(dirB, node.getPath());
             pane1.setText(node.getPath() + "\n" + new String(Files.readAllBytes(path1)));
             pane2.setText(node.getPath() + "\n" + new String(Files.readAllBytes(path2)));
+            pane1.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+            pane2.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+
             Patch<String> patch = getPatchFromFile(path1, path2);
             for (AbstractDelta<String> delta : patch.getDeltas()) {
                 switch (delta.getType()) {
@@ -79,10 +82,10 @@ public class TextSetter {
         int targetLen = delta.getTarget().getLines().size();
 
         for (int i = sourcePos; i < sourcePos + sourceLen; i++) {
-            pane1.addLineHighlight(i, color1);
+            pane1.addLineHighlight(i + 1, color1);
         }
         for (int i = targetPos; i < targetPos + targetLen; i++) {
-            pane2.addLineHighlight(i, color2);
+            pane2.addLineHighlight(i + 1, color2);
         }
     }
 

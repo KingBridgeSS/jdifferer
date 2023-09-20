@@ -3,13 +3,12 @@ package org.bridge.core.services;
 import com.github.difflib.DiffUtils;
 import com.github.difflib.patch.AbstractDelta;
 import com.github.difflib.patch.Patch;
+import org.bridge.core.filetree.TreeNode;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
-import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,10 +20,12 @@ public class TextSetter {
     public final static Color DELETE_COLOR = new Color(255, 197, 197);
     public final static Color INSERT_COLOR = new Color(184, 234, 184);
 
-    public static void readFileToTextArea(RSyntaxTextArea pane, Path filePath) {
-        String text;
+    public static void readFileToTextArea(RSyntaxTextArea pane, TreeNode node) {
+        Path filePath = Paths.get(node.getFilePath());
+        StringBuilder sb = new StringBuilder();
+        sb.append(node.getPath() + "\n");
         try {
-            text = new String(Files.readAllBytes(filePath));
+            sb.append(new String(Files.readAllBytes(filePath)));
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
@@ -33,15 +34,15 @@ public class TextSetter {
         } else {
             pane.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
         }
-        pane.setText(text);
+        pane.setText(sb.toString());
     }
 
-    public static void setDiffTextArea(RSyntaxTextArea pane1, RSyntaxTextArea pane2, String path, String dirA, String dirB) {
+    public static void setDiffTextArea(RSyntaxTextArea pane1, RSyntaxTextArea pane2, TreeNode node, String dirA, String dirB) {
         try {
-            Path path1 = Paths.get(dirA, path);
-            Path path2 = Paths.get(dirB, path);
-            pane1.setText(new String(Files.readAllBytes(path1)));
-            pane2.setText(new String(Files.readAllBytes(path2)));
+            Path path1 = Paths.get(dirA, node.getPath());
+            Path path2 = Paths.get(dirB, node.getPath());
+            pane1.setText(node.getPath() + "\n" + new String(Files.readAllBytes(path1)));
+            pane2.setText(node.getPath() + "\n" + new String(Files.readAllBytes(path2)));
             Patch<String> patch = getPatchFromFile(path1, path2);
             for (AbstractDelta<String> delta : patch.getDeltas()) {
                 switch (delta.getType()) {
@@ -86,6 +87,6 @@ public class TextSetter {
     }
 
     public static void main(String[] args) {
-        setDiffTextArea(null, null, "/text1.txt", "G:\\workspace\\dev\\jdifferer\\temp", "G:\\workspace\\dev\\jdifferer\\temp\\temp2");
+//        setDiffTextArea(null, null, "/text1.txt", "G:\\workspace\\dev\\jdifferer\\temp", "G:\\workspace\\dev\\jdifferer\\temp\\temp2");
     }
 }

@@ -51,13 +51,13 @@ public class MainFrame {
     private void insertTextArea() {
         textArea1 = new RSyntaxTextArea();
         textArea2 = new RSyntaxTextArea();
-
         textArea1.setEditable(false);
         textArea1.setHighlightCurrentLine(false);
         textArea2.setEditable(false);
         textArea2.setHighlightCurrentLine(false);
         textArea1.setBackground(new Color(245, 245, 245));
         textArea2.setBackground(new Color(245, 245, 245));
+
         codeScroll1.setViewportView(textArea1);
         codeScroll2.setViewportView(textArea2);
     }
@@ -88,15 +88,19 @@ public class MainFrame {
                 if (selectedNode != null && selectedNode.getUserObject() instanceof TreeNode) {
                     DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) selectedNode.getParent();
                     TreeNode treeNode = (TreeNode) selectedNode.getUserObject();
-                        if (parentNode.getUserObject().equals("ADD")) {
-                            TextSetter.readFileToTextArea(textArea2, Paths.get(treeNode.getFilePath()));
-                            textArea1.setText(null);
-                        } else if (parentNode.getUserObject().equals("DELETE")) {
-                            TextSetter.readFileToTextArea(textArea1, Paths.get(treeNode.getFilePath()));
-                            textArea2.setText(null);
-                        } else {
-                            TextSetter.setDiffTextArea(textArea1, textArea2, treeNode.getPath(), dirA, dirB);
-                        }
+                    if (parentNode.getUserObject().equals("ADD")) {
+                        TextSetter.readFileToTextArea(textArea2, treeNode);
+                        textArea2.select(0, 0);
+                        textArea1.setText(null);
+                    } else if (parentNode.getUserObject().equals("DELETE")) {
+                        TextSetter.readFileToTextArea(textArea1, treeNode);
+                        textArea1.select(0, 0);
+                        textArea2.setText(null);
+                    } else {
+                        TextSetter.setDiffTextArea(textArea1, textArea2, treeNode, dirA, dirB);
+                        textArea1.select(0, 0);
+                        textArea2.select(0, 0);
+                    }
                 }
             }
         });

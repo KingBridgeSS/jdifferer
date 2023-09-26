@@ -1,52 +1,37 @@
-diff jar
+# Jdifferer
+
+[English](readme.md) | [中文](readme-zh.md)
+
+Jdifferer is a GUI application used to diff the code of two jars. It provides a convenient approach to compare the differeces of jars file for developer and security researcher.
+
+Jdifferer can decompile the jar files automatically and provides a friendly GUI view to show the differences between the files in the aspect of source code.
+
+[jd-core](https://github.com/java-decompiler/jd-core) provides the decompiling APIs.
+
+![image-20230926115942438](./assets/image-20230926115942438.png)   
 
 
-读取A文件夹和B文件夹，创建这两个文件夹的树。
+## Usage
 
-用一个数组`D`来存储两颗树的差异，元素是TreeDifference，后者存储了两个node
+Choose Project -> open on the top-left to choose the two jar files to compare.
 
+The sidebar on the left side provides three nodes, representing the updated, added and deleted files of the compared jar files, respectively.
+
+![image-20230926120322733](./assets/image-20230926120322733.png)
+
+When you choose one update node, red contents are deleted contents, green contents are add contents and yellow contents are updated contents. (image below is yet a demo)
+
+![img](./assets/Pasted image 20230919192708.png)
 
 ## TODO
 
 - [x] filetree
 - [x] main gui
-- [ ] dialog for choosing directory
+- [x] dialog for choosing directory
 - [x] code highlight
-- [ ] diff
-- [ ] line wrap
+- [x] diff
+- [x] line wrap
 - [ ] auto expand
-- [ ] error dialog
+- [x] error dialog
 - [ ] ctrl f
-## diff
-## diff file tree:
 
-return commons file list:
-把path拼接分别读文件的逻辑在services层里
-遍历获得path，分别遍历dirA，dirB生成DiffFileNodeInfo数组，去掉一样的文件，然后丢到diffNode里。点击事件在MainFrame里
-
-## diff file
-
-change
-
-yellow
-
-![image-20230919170844682](./assets/image-20230919170844682.png)
-
-delete
-
-red
-
-![image-20230919171001889](./assets/image-20230919171001889.png)
-
-INSERT
-
-green
-
-![image-20230919171727105](./assets/image-20230919171727105.png)
-
-## filetree
-
-- filetree
-  -- update
-  -- add
-  -- delete

@@ -71,7 +71,7 @@ public class JarsChoosingDialog extends JDialog {
     private void setLocationAndSize() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double widthRatio = 0.5;
-        double heightRatio = 0.25;
+        double heightRatio = 0.3;
         int dialogWidth = (int) (screenSize.width * widthRatio);
         int dialogHeight = (int) (screenSize.height * heightRatio);
         setSize(dialogWidth, dialogHeight);

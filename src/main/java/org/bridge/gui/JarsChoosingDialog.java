@@ -115,8 +115,4 @@ public class JarsChoosingDialog extends JDialog {
     private void onCancel() {
         dispose();
     }
-
-    public List<File> getFilesMessage() {
-        return filesMessage;
-    }
 }

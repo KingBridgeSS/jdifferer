@@ -34,14 +34,6 @@ public class TreeUtils {
         }
     }
 
-    public static List<String> getFilePathList(TreeNode root) {
-        List<String> pathList = new ArrayList<>();
-        if(root.isFile()){
-            pathList.add(root.getPath());
-        }
-        getFilePathHelper(root, pathList);
-        return pathList;
-    }
 
     private static void getFilePathHelper(TreeNode node, List<String> pathList) {
         for (TreeNode child : node.getChildren()) {

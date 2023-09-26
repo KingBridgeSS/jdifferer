@@ -11,11 +11,6 @@ import java.nio.file.Paths;
 
 public class JDCoreDecompiler implements Decompiler {
     @Override
-    public String decompile(byte[] classBytes) throws Exception {
-        return null;
-    }
-
-    @Override
     public String decompile(String fileName) {
         FileNameLoader loader = new FileNameLoader();
         DefaultPrinter printer = new DefaultPrinter();

@@ -36,17 +36,4 @@ public class FileTreeBuilder {
         return node;
     }
 
-    public static void main(String[] args) {
-        String A = "G:\\workspace\\dev\\jdifferer\\A";
-        String B = "G:\\workspace\\dev\\jdifferer\\B";
-        TreeNode t1 = buildFileTree(A);
-        TreeNode t2 = buildFileTree(B);
-        DeltaCommons dc = TreeComparator.compareTrees(t1, t2);
-//        TreeUtils.printDifference(dc.getDifferences());
-//        TreeUtils.printFileTree(dc.getIntersectionTree(), "");
-        System.out.println(Arrays.toString(TreeUtils.getFilePathList(t1).toArray()));
-        System.out.println(Arrays.toString(TreeUtils.getFilePathList(t2).toArray()));
-        System.out.println(Arrays.toString(TreeUtils.getFilePathList(dc.getIntersectionTree()).toArray()));
-
-    }
 }

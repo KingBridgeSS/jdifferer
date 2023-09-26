@@ -89,7 +89,5 @@ public class TextSetter {
         }
     }
 
-    public static void main(String[] args) {
-//        setDiffTextArea(null, null, "/text1.txt", "G:\\workspace\\dev\\jdifferer\\temp", "G:\\workspace\\dev\\jdifferer\\temp\\temp2");
-    }
+
 }

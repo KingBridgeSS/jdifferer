@@ -2,14 +2,9 @@ package org.bridge.core.services;
 
 import org.bridge.core.differ.DiffFileNodeInfo;
 import org.bridge.core.filetree.*;
-import sun.reflect.generics.tree.Tree;
-
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 
 public class MakeDiffFileTree {

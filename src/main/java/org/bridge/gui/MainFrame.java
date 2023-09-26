@@ -80,6 +80,9 @@ public class MainFrame {
             dialog.setVisible(true);
         });
         JMenuItem exitItem = new JMenuItem("exit");
+        exitItem.addActionListener(e -> {
+            System.exit(0);
+        });
         projectMenu.add(openItem);
         projectMenu.add(exitItem);
 
@@ -115,7 +118,4 @@ public class MainFrame {
         });
     }
 
-    public static void main(String[] args) {
-        new MainFrame().showGUI();
-    }
 }

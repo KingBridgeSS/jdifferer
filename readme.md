@@ -21,7 +21,7 @@ The sidebar on the left side provides three nodes, representing the updated, add
 
 When you choose one update node, red contents are deleted contents, green contents are added contents and yellow contents are updated contents. (image below is yet a demo)
 
-![img](./assets/Pasted image 20230919192708.png)
+![img](./assets/demodiff.png)
 
 ## TODO
 
